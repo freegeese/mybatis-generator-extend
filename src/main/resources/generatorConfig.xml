@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="MysqlTables" defaultModelType="flat" targetRuntime="org.mybatis.generator.extend.codegen.mybatis3.ExtendIntrospectedTableMyBatis3Impl">
+        <!--
+        <!ELEMENT generatorConfiguration (properties?, classPathEntry*, context+)>
+        -->
+
+        <plugin type="org.mybatis.generator.extend.plugins.SqlMapSelectAllPlugin"/>
+
+        <!-- 注释生成 -->
+        <commentGenerator type="org.mybatis.generator.internal.DefaultCommentGenerator">
+            <property name="suppressAllComments" value="true"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库连接 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://192.168.0.7:3306/xinyuan_test"
+                        userId="root"
+                        password="qaj">
+            <!--  针对oracle数据库  -->
+            <property name="remarksReporting" value="true"></property>
+        </jdbcConnection>
+
+        <!--  指定生成的类型为java类型，避免数据库中number等类型字段  -->
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!--  生成model模型，对应的包，存放位置可以指定具体的路径,如/src/main/java，也可以使用MAVEN来自动生成  -->
+        <javaModelGenerator targetPackage="com.mocai.merchant.model" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 对应的xml mapper文件   -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+            <property name="isMerge" value="false"/>
+        </sqlMapGenerator>
+
+        <!--  对应的dao接口  -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.mocai.merchant.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <table tableName="configuration" domainObjectName="Configuration"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="false"
+               selectByExampleQueryId="false">
+            <columnOverride column="content" jdbcType="VARCHAR"/>
+        </table>
+
+        <!--<table tableName="xx_product" domainObjectName="Product">-->
+        <!--<property name="useActualColumnNames" value="true"/>-->
+        <!--<generatedKey column="id" sqlStatement="MySQL" identity="true"/>-->
+        <!--<columnOverride column="DATE_FIELD" property="startDate"/>-->
+        <!--<ignoreColumn column="FRED"/>-->
+        <!--<columnOverride column="LONG_VARCHAR_FIELD" jdbcType="VARCHAR"/>-->
+        <!--</table>-->
+
+    </context>
+</generatorConfiguration>
