@@ -46,24 +46,30 @@ public class SelectByRecordElementGenerator extends AbstractXmlElementGenerator 
 
         for (IntrospectedColumn introspectedColumn : ListUtilities.removeGeneratedAlwaysColumns(introspectedTable
                 .getNonPrimaryKeyColumns())) {
+            // if 标签
             XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
             sb.setLength(0);
             sb.append(introspectedColumn.getJavaProperty());
             sb.append(" != null"); //$NON-NLS-1$
             ifElement.addAttribute(new Attribute("test", sb.toString())); //$NON-NLS-1$
-            whereElement.addElement(ifElement);
 
             sb.setLength(0);
             if (whereElement.getElements().size() > 0) {
-                sb.append(" and ");
+                sb.append("and ");
             }
-            sb.append(MyBatis3FormattingUtilities
-                    .getEscapedColumnName(introspectedColumn));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append(MyBatis3FormattingUtilities
-                    .getParameterClause(introspectedColumn));
+            // 列名
+            sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
+            // 参数值
+            String parameterClause = MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
+            if (introspectedColumn.isStringColumn()) {
+                sb.append(" like \"%\"" + parameterClause + "\"%\" ");
+            } else {
+                sb.append(" = ").append(parameterClause);
+            }
 
             ifElement.addElement(new TextElement(sb.toString()));
+            // 将 if 标签添加到 where 标签中
+            whereElement.addElement(ifElement);
         }
 
         parentElement.addElement(answer);

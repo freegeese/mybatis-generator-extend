@@ -39,7 +39,7 @@ public class ExtendIntrospectedTableMyBatis3Impl extends IntrospectedTableMyBati
         List<GeneratedXmlFile> answer = new ArrayList<GeneratedXmlFile>();
         // 添加是否合并参数 ------------------
         boolean merge = true;
-        String isMerge = context.getProperty("isMerge");
+        String isMerge = context.getSqlMapGeneratorConfiguration().getProperty("isMerge");
         if (null != isMerge) {
             merge = Boolean.valueOf(isMerge);
         }
