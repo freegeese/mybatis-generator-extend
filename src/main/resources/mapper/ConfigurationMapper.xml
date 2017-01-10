@@ -86,4 +86,12 @@
       </if>
     </where>
   </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select count(*) 
+    from configuration
+  </select>
+
+	<!--CUSTOM_CODE_START-->
+
+	<!--CUSTOM_CODE_END-->
 </mapper>

@@ -4,12 +4,36 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
-    <context id="MysqlTables" defaultModelType="flat" targetRuntime="org.mybatis.generator.extend.codegen.mybatis3.ExtendIntrospectedTableMyBatis3Impl">
-        <!--
+    <!--
         <!ELEMENT generatorConfiguration (properties?, classPathEntry*, context+)>
-        -->
+    -->
+    <context id="MysqlTables" defaultModelType="flat"
+             targetRuntime="org.mybatis.generator.extend.codegen.mybatis3.ExtendIntrospectedTableMyBatis3Impl">
 
-        <plugin type="org.mybatis.generator.extend.plugins.SqlMapSelectAllPlugin"/>
+        <!-- 自定义代码开始标记 -->
+        <property name="customCodeStartMark" value="CUSTOM_CODE_START"/>
+
+        <!-- 自定义代码结束标记 -->
+        <property name="customCodeEndMark" value="CUSTOM_CODE_END"/>
+
+        <!-- java文件格式化 -->
+        <property name="javaFormatter" value="org.mybatis.generator.extend.api.dom.ExtendJavaFormatter"/>
+
+        <!-- xml文件格式化 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.extend.api.dom.ExtendXmlFormatter"/>
+
+        <!-- 配置不需要生成的接口 -->
+        <plugin type="org.mybatis.generator.extend.plugins.NotNeedGeneratePlugin"/>
+
+        <!-- 扩展client生成 -->
+        <plugin type="org.mybatis.generator.extend.plugins.ExtendMapperInterfaceGeneratorPlugin">
+            <!-- 添加Annotation -->
+            <property name="annotations" value="org.springframework.stereotype.Repository"/>
+            <!-- 添加父接口 -->
+            <property name="superInterfaces" value="com.mocai.merchant.core.BaseMapper"/>
+            <!-- 主键类型 -->
+            <property name="primaryKeyType" value="Integer"/>
+        </plugin>
 
         <!-- 注释生成 -->
         <commentGenerator type="org.mybatis.generator.internal.DefaultCommentGenerator">
@@ -48,13 +72,13 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="configuration" domainObjectName="Configuration"
-               enableCountByExample="false"
-               enableUpdateByExample="false"
-               enableDeleteByExample="false"
-               enableSelectByExample="false"
-               selectByExampleQueryId="false">
+        <table tableName="configuration" domainObjectName="Configuration">
             <columnOverride column="content" jdbcType="VARCHAR"/>
+        </table>
+
+        <table tableName="template" domainObjectName="Template">
+            <columnOverride column="content" jdbcType="VARCHAR"/>
+            <columnOverride column="parameters" jdbcType="VARCHAR"/>
         </table>
 
         <!--<table tableName="xx_product" domainObjectName="Product">-->

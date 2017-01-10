@@ -30,4 +30,8 @@ public class Configuration {
     public void setContent(String content) {
         this.content = content;
     }
+
+	/*CUSTOM_CODE_START*/
+
+	/*CUSTOM_CODE_END*/
 }
