@@ -111,4 +111,14 @@ public class ExtendIntrospectedTableMyBatis3Impl extends IntrospectedTableMyBati
     public static GeneratedJavaFile getGeneratedJavaFile(CompilationUnit compilationUnit) {
         return compilationUnitWithGeneratedFileMap.get(GeneratorUtils.getJavaFileClassName(compilationUnit));
     }
+
+    /**
+     * 获取编译单元对应的生成文件对象
+     *
+     * @param className
+     * @return
+     */
+    public static GeneratedJavaFile getGeneratedJavaFile(String className) {
+        return compilationUnitWithGeneratedFileMap.get(className);
+    }
 }

@@ -5,7 +5,9 @@ import org.mybatis.generator.api.PluginAdapter;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.config.JavaClientGeneratorConfiguration;
 
+import java.io.File;
 import java.util.List;
 import java.util.Properties;
 
@@ -28,13 +30,13 @@ public class ExtendMapperInterfaceGeneratorPlugin extends PluginAdapter {
 
     @Override
     public boolean clientGenerated(Interface interfaze, TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        // 判断需要生成的Mapper接口是否已经存在，已存在则不重新生成
         String mapperInterfaceClassName = interfaze.getType().getFullyQualifiedName();
-        try {
-            Class.forName(mapperInterfaceClassName);
-            // 已经生成过了
+        JavaClientGeneratorConfiguration javaClientGeneratorConfiguration = context.getJavaClientGeneratorConfiguration();
+        String targetProject = javaClientGeneratorConfiguration.getTargetProject();
+        File file = new File(targetProject, mapperInterfaceClassName.replace(".", File.separator) + ".java");
+        if (file.exists()) {
             return false;
-        } catch (ClassNotFoundException e) {
-            // 第一次生成
         }
 
         Properties properties = getProperties();
