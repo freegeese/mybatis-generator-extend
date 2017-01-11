@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.freegeese</groupId>
     <artifactId>mybatis-generator-extend</artifactId>
-    <version>0.0.1</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>mybatis-generator-extend</name>
     <url>https://github.com/freegeese/mybatis-generator-extend</url>
@@ -114,6 +114,7 @@
                     <charset>UTF-8</charset>
                     <encoding>UTF-8</encoding>
                     <docencoding>UTF-8</docencoding>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
                 <executions>
                     <execution>
