@@ -118,3 +118,5 @@ local.properties
 # Code Recommenders
 .recommenders/
 
+/src/main/java/com/mocai/merchant/
+/src/main/resources/mapper/
