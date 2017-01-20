@@ -2,9 +2,7 @@ package org.mybatis.generator.extend.codegen.mybatis3.xmlmapper;
 
 import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.XMLMapperGenerator;
-import org.mybatis.generator.extend.codegen.mybatis3.xmlmapper.elements.CountElementGenerator;
-import org.mybatis.generator.extend.codegen.mybatis3.xmlmapper.elements.SelectAllElementGenerator;
-import org.mybatis.generator.extend.codegen.mybatis3.xmlmapper.elements.SelectByRecordElementGenerator;
+import org.mybatis.generator.extend.codegen.mybatis3.xmlmapper.elements.*;
 
 /**
  * Created by Administrator on 2017/1/8.
@@ -20,10 +18,29 @@ public class ExtendXMLMapperGenerator extends XMLMapperGenerator {
         addSelectByRecordElement(sqlMapElement);
         // 统计
         addCountElement(sqlMapElement);
+        // 批量插入
+        addBatchInsertElement(sqlMapElement);
+        // 批量更新
+        addBatchUpdateElement(sqlMapElement);
+        // 批量删除
+        addBatchDeleteElement(sqlMapElement);
+
         return sqlMapElement;
     }
 
-    private void addCountElement(XmlElement parentElement) {
+    protected void addBatchDeleteElement(XmlElement parentElement) {
+        initializeAndExecuteGenerator(new BatchDeleteElementGenerator(), parentElement);
+    }
+
+    protected void addBatchUpdateElement(XmlElement parentElement) {
+        initializeAndExecuteGenerator(new BatchUpdateElementGenerator(), parentElement);
+    }
+
+    protected void addBatchInsertElement(XmlElement parentElement) {
+        initializeAndExecuteGenerator(new BatchInsertElementGenerator(), parentElement);
+    }
+
+    protected void addCountElement(XmlElement parentElement) {
         initializeAndExecuteGenerator(new CountElementGenerator(), parentElement);
     }
 
