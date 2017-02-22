@@ -37,6 +37,7 @@ public class BatchInsertElementGenerator extends AbstractXmlElementGenerator {
         StringBuilder insertValues = new StringBuilder();
         insertValues.append("(");
 
+        String itemKey = "item";
         Iterator<IntrospectedColumn> iterator = introspectedTable.getAllColumns().iterator();
         while (iterator.hasNext()) {
             IntrospectedColumn column = iterator.next();
@@ -45,7 +46,7 @@ public class BatchInsertElementGenerator extends AbstractXmlElementGenerator {
             }
             insertColumns.append(Ibatis2FormattingUtilities.getEscapedColumnName(column));
             // (#{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR})
-            insertValues.append("#{item." + column.getActualColumnName() + ", jdbcType=" + column.getJdbcTypeName() + "}");
+            insertValues.append("#{" + itemKey + "." + column.getActualColumnName() + ", jdbcType=" + column.getJdbcTypeName() + "}");
             if (iterator.hasNext()) {
                 insertColumns.append(", "); //$NON-NLS-1$
                 insertValues.append(", "); //$NON-NLS-1$
@@ -57,7 +58,7 @@ public class BatchInsertElementGenerator extends AbstractXmlElementGenerator {
         insertValues.append(")");
         XmlElement foreach = new XmlElement("foreach");
         foreach.addAttribute(new Attribute("collection", "list"));
-        foreach.addAttribute(new Attribute("item", "list"));
+        foreach.addAttribute(new Attribute("item", itemKey));
         foreach.addAttribute(new Attribute("separator", ","));
         foreach.addElement(new TextElement(insertValues.toString()));
         answer.addElement(foreach);
