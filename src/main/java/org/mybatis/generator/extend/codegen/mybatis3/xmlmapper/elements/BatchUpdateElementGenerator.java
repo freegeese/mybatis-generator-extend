@@ -7,6 +7,8 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/1/8.
  */
@@ -35,8 +37,9 @@ public class BatchUpdateElementGenerator extends AbstractXmlElementGenerator {
         XmlElement setElement = new XmlElement("set"); //$NON-NLS-1$
         foreach.addElement(setElement);
 
-        for (IntrospectedColumn column : introspectedTable
-                .getNonPrimaryKeyColumns()) {
+        List<IntrospectedColumn> nonPrimaryKeyColumns = introspectedTable.getNonPrimaryKeyColumns();
+        int index = 0;
+        for (IntrospectedColumn column : nonPrimaryKeyColumns) {
             XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
             String property = column.getJavaProperty();
             ifElement.addAttribute(new Attribute("test", "item." + property + " != null"));
@@ -44,6 +47,10 @@ public class BatchUpdateElementGenerator extends AbstractXmlElementGenerator {
             sb.append(Ibatis2FormattingUtilities.getEscapedColumnName(column));
             sb.append(" = "); //$NON-NLS-1$
             sb.append("#{item." + column.getActualColumnName() + ", jdbcType=" + column.getJdbcTypeName() + "}");
+            index++;
+            if (index < nonPrimaryKeyColumns.size()) {
+                sb.append(",");
+            }
             ifElement.addElement(new TextElement(sb.toString()));
 
             setElement.addElement(ifElement);
