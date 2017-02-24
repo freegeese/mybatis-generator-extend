@@ -15,8 +15,8 @@ import java.util.List;
 public class BatchUpdateElementGenerator extends AbstractXmlElementGenerator {
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("update"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("id", "batchUpdate")); //$NON-NLS-1$
+        XmlElement answer = new XmlElement("update"); 
+        answer.addAttribute(new Attribute("id", "batchUpdate")); 
         context.getCommentGenerator().addComment(answer);
 
         // <foreach collection="list" item="item" index="index" open="" close="" separator=";">
@@ -30,23 +30,23 @@ public class BatchUpdateElementGenerator extends AbstractXmlElementGenerator {
         answer.addElement(foreach);
 
         StringBuilder sb = new StringBuilder();
-        sb.append("update "); //$NON-NLS-1$
+        sb.append("update "); 
         sb.append(introspectedTable.getFullyQualifiedTableNameAtRuntime());
         foreach.addElement(new TextElement(sb.toString()));
 
-        XmlElement setElement = new XmlElement("set"); //$NON-NLS-1$
+        XmlElement setElement = new XmlElement("set"); 
         foreach.addElement(setElement);
 
         List<IntrospectedColumn> nonPrimaryKeyColumns = introspectedTable.getNonPrimaryKeyColumns();
         int index = 0;
         for (IntrospectedColumn column : nonPrimaryKeyColumns) {
-            XmlElement ifElement = new XmlElement("if"); //$NON-NLS-1$
+            XmlElement ifElement = new XmlElement("if"); 
             String property = column.getJavaProperty();
             ifElement.addAttribute(new Attribute("test", "item." + property + " != null"));
             sb.setLength(0);
             sb.append(Ibatis2FormattingUtilities.getEscapedColumnName(column));
-            sb.append(" = "); //$NON-NLS-1$
-            sb.append("#{item." + column.getActualColumnName() + ", jdbcType=" + column.getJdbcTypeName() + "}");
+            sb.append(" = "); 
+            sb.append("#{item." + property + ", jdbcType=" + column.getJdbcTypeName() + "}");
             index++;
             if (index < nonPrimaryKeyColumns.size()) {
                 sb.append(",");
@@ -60,14 +60,14 @@ public class BatchUpdateElementGenerator extends AbstractXmlElementGenerator {
         for (IntrospectedColumn column : introspectedTable.getPrimaryKeyColumns()) {
             sb.setLength(0);
             if (and) {
-                sb.append("  and "); //$NON-NLS-1$
+                sb.append("  and "); 
             } else {
-                sb.append("where "); //$NON-NLS-1$
+                sb.append("where "); 
                 and = true;
             }
 
             sb.append(Ibatis2FormattingUtilities.getEscapedColumnName(column));
-            sb.append(" = "); //$NON-NLS-1$
+            sb.append(" = "); 
             sb.append("#{item." + column.getActualColumnName() + ", jdbcType=" + column.getJdbcTypeName() + "}");
             foreach.addElement(new TextElement(sb.toString()));
         }

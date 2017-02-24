@@ -14,8 +14,10 @@ public class ExtendXMLMapperGenerator extends XMLMapperGenerator {
         XmlElement sqlMapElement = super.getSqlMapElement();
         // 查询所有
         addSelectAllElement(sqlMapElement);
-        // 条件查询(字符串使用Like查询)
-        addSelectByRecordElement(sqlMapElement);
+        // 实体查询
+        addSelectByEntityElement(sqlMapElement);
+        // 自定义条件查询
+        addSelectByConditionsElement(sqlMapElement);
         // 统计
         addCountElement(sqlMapElement);
         // 批量插入
@@ -26,6 +28,10 @@ public class ExtendXMLMapperGenerator extends XMLMapperGenerator {
         addBatchDeleteElement(sqlMapElement);
 
         return sqlMapElement;
+    }
+
+    protected void addSelectByConditionsElement(XmlElement parentElement) {
+        initializeAndExecuteGenerator(new SelectByConditionsElementGenerator(), parentElement);
     }
 
     protected void addBatchDeleteElement(XmlElement parentElement) {
@@ -44,8 +50,8 @@ public class ExtendXMLMapperGenerator extends XMLMapperGenerator {
         initializeAndExecuteGenerator(new CountElementGenerator(), parentElement);
     }
 
-    protected void addSelectByRecordElement(XmlElement parentElement) {
-        initializeAndExecuteGenerator(new SelectByRecordElementGenerator(), parentElement);
+    protected void addSelectByEntityElement(XmlElement parentElement) {
+        initializeAndExecuteGenerator(new SelectByEntityElementGenerator(), parentElement);
     }
 
     protected void addSelectAllElement(XmlElement parentElement) {

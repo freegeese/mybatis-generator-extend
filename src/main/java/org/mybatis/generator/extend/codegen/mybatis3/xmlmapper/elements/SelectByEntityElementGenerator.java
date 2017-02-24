@@ -12,12 +12,12 @@ import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElem
 /**
  * Created by Administrator on 2017/1/8.
  */
-public class SelectByRecordElementGenerator extends AbstractXmlElementGenerator {
+public class SelectByEntityElementGenerator extends AbstractXmlElementGenerator {
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
 
-        answer.addAttribute(new Attribute("id", "selectByRecord")); //$NON-NLS-1$
+        answer.addAttribute(new Attribute("id", "selectByEntity")); //$NON-NLS-1$
 
         FullyQualifiedJavaType parameterType = introspectedTable.getRules()
                 .calculateAllFieldsClass();
@@ -61,11 +61,12 @@ public class SelectByRecordElementGenerator extends AbstractXmlElementGenerator 
             sb.append(MyBatis3FormattingUtilities.getEscapedColumnName(introspectedColumn));
             // 参数值
             String parameterClause = MyBatis3FormattingUtilities.getParameterClause(introspectedColumn);
-            if (introspectedColumn.isStringColumn()) {
-                sb.append(" like \"%\"" + parameterClause + "\"%\" ");
-            } else {
-                sb.append(" = ").append(parameterClause);
-            }
+            sb.append(" = ").append(parameterClause);
+//            if (introspectedColumn.isStringColumn()) {
+//                sb.append(" like \"%\"" + parameterClause + "\"%\" ");
+//            } else {
+//                sb.append(" = ").append(parameterClause);
+//            }
 
             ifElement.addElement(new TextElement(sb.toString()));
             // 将 if 标签添加到 where 标签中

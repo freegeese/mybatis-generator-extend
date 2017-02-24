@@ -8,7 +8,6 @@ import org.mybatis.generator.codegen.ibatis2.Ibatis2FormattingUtilities;
 import org.mybatis.generator.codegen.mybatis3.xmlmapper.elements.AbstractXmlElementGenerator;
 
 import java.util.Iterator;
-import java.util.List;
 
 /**
  * Created by Administrator on 2017/1/8.
@@ -24,10 +23,10 @@ public class BatchInsertElementGenerator extends AbstractXmlElementGenerator {
      */
     @Override
     public void addElements(XmlElement parentElement) {
-        XmlElement answer = new XmlElement("insert"); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("id", "batchInsert")); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("useGeneratedKeys", "true")); //$NON-NLS-1$
-        answer.addAttribute(new Attribute("keyProperty", "id")); //$NON-NLS-1$
+        XmlElement answer = new XmlElement("insert");
+        answer.addAttribute(new Attribute("id", "batchInsert"));
+        answer.addAttribute(new Attribute("useGeneratedKeys", "true"));
+        answer.addAttribute(new Attribute("keyProperty", "id"));
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder insertColumns = new StringBuilder();
@@ -46,10 +45,10 @@ public class BatchInsertElementGenerator extends AbstractXmlElementGenerator {
             }
             insertColumns.append(Ibatis2FormattingUtilities.getEscapedColumnName(column));
             // (#{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR})
-            insertValues.append("#{" + itemKey + "." + column.getActualColumnName() + ", jdbcType=" + column.getJdbcTypeName() + "}");
+            insertValues.append("#{" + itemKey + "." + column.getJavaProperty() + ", jdbcType=" + column.getJdbcTypeName() + "}");
             if (iterator.hasNext()) {
-                insertColumns.append(", "); //$NON-NLS-1$
-                insertValues.append(", "); //$NON-NLS-1$
+                insertColumns.append(", ");
+                insertValues.append(", ");
             }
         }
         insertColumns.append(") values");
