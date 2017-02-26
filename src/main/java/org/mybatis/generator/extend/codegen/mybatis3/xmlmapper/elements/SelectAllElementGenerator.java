@@ -12,13 +12,10 @@ public class SelectAllElementGenerator extends AbstractXmlElementGenerator {
     @Override
     public void addElements(XmlElement parentElement) {
         XmlElement answer = new XmlElement("select"); //$NON-NLS-1$
-
         answer.addAttribute(new Attribute(
                 "id", introspectedTable.getSelectAllStatementId())); //$NON-NLS-1$
-
         answer.addAttribute(new Attribute("resultMap",
                 introspectedTable.getBaseResultMapId()));
-
         context.getCommentGenerator().addComment(answer);
 
         StringBuilder sb = new StringBuilder();
