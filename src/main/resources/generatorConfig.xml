@@ -60,7 +60,7 @@
             <property name="enableSubPackages" value="true"/>
         </javaModelGenerator>
 
-        <!-- 对应的xml mapper文件   -->
+        <!-- 对应的xml mapper文件 -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
             <property name="enableSubPackages" value="true"/>
             <property name="isMerge" value="false"/>
@@ -76,10 +76,10 @@
             <columnOverride column="content" jdbcType="VARCHAR"/>
         </table>
 
-        <table tableName="template" domainObjectName="Template">
-            <columnOverride column="content" jdbcType="VARCHAR"/>
-            <columnOverride column="parameters" jdbcType="VARCHAR"/>
-        </table>
+        <!--<table tableName="template" domainObjectName="Template">-->
+            <!--<columnOverride column="content" jdbcType="VARCHAR"/>-->
+            <!--<columnOverride column="parameters" jdbcType="VARCHAR"/>-->
+        <!--</table>-->
 
         <!--<table tableName="xx_product" domainObjectName="Product">-->
         <!--<property name="useActualColumnNames" value="true"/>-->
